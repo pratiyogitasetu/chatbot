@@ -1,0 +1,25 @@
+# Production Requirements for Railway Deployment
+# Optimized for fast cold starts and minimal memory usage
+
+# Core Framework
+flask==3.0.0
+flask-cors==4.0.0
+werkzeug==3.0.1
+
+# Environment & Config
+python-dotenv==1.0.0
+
+# AI & ML APIs
+groq==0.4.2
+pinecone-client==3.0.3
+
+# Embeddings (necessary for semantic search)
+sentence-transformers==2.3.1
+torch==2.1.2
+transformers==4.36.2
+
+# Utilities
+numpy==1.26.3
+
+# Production Server (optional, Railway uses Gunicorn by default)
+gunicorn==21.2.0
