@@ -23,6 +23,8 @@ const Sidebar = () => {
   const [showPyqsModal, setShowPyqsModal] = useState(false)
   const [showHelpModal, setShowHelpModal] = useState(false)
   const [showWhatsNewModal, setShowWhatsNewModal] = useState(false)
+  const [showComingSoonModal, setShowComingSoonModal] = useState(false)
+  const [comingSoonFeature, setComingSoonFeature] = useState('')
   const [isLoadingBooks, setIsLoadingBooks] = useState(false)
   const [isLoadingPyqs, setIsLoadingPyqs] = useState(false)
   const [isLoadingChats, setIsLoadingChats] = useState(false)
@@ -187,13 +189,15 @@ const Sidebar = () => {
   }
 
   const handleEligibilityClick = () => {
-    // Emit event to switch to eligibility check view
-    window.dispatchEvent(new CustomEvent('switchToEligibility'))
+    // Show coming soon modal
+    setComingSoonFeature('Check Eligibility')
+    setShowComingSoonModal(true)
   }
 
   const handleSyllabusClick = () => {
-    // Emit event to switch to syllabus view
-    window.dispatchEvent(new CustomEvent('switchToSyllabus'))
+    // Show coming soon modal
+    setComingSoonFeature('Exam Syllabus')
+    setShowComingSoonModal(true)
   }
 
   const handleQuizClick = () => {
@@ -202,8 +206,9 @@ const Sidebar = () => {
   }
 
   const handleGDTopicsClick = () => {
-    // Emit event to switch to GD topics view
-    window.dispatchEvent(new CustomEvent('switchToGDTopics'))
+    // Show coming soon modal
+    setComingSoonFeature('AI for GD Topics')
+    setShowComingSoonModal(true)
   }
 
   // Load books and inserted PYQs on component mount
@@ -962,6 +967,65 @@ const Sidebar = () => {
         isOpen={showWhatsNewModal}
         onClose={() => setShowWhatsNewModal(false)}
       />
+
+      {/* Coming Soon Modal */}
+      {showComingSoonModal && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 animate-fade-in"
+          onClick={(e) => { if (e.target === e.currentTarget) setShowComingSoonModal(false) }}
+        >
+          <div
+            className="bg-white rounded-lg p-8 max-w-md w-full mx-4 text-center transform transition-all duration-300 ease-out animate-slide-up"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Close Button */}
+            <button
+              onClick={() => setShowComingSoonModal(false)}
+              className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors"
+              aria-label="Close modal"
+            >
+              ×
+            </button>
+
+            {/* Icon */}
+            <div className="mb-6">
+              <div className="w-20 h-20 mx-auto bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full flex items-center justify-center">
+                <Clock className="w-10 h-10 text-white" />
+              </div>
+            </div>
+
+            {/* Title */}
+            <h2 className="text-2xl font-bold text-gray-800 mb-3">
+              Coming Soon! 🚀
+            </h2>
+
+            {/* Feature Name */}
+            <p className="text-lg font-semibold text-gray-700 mb-4">
+              {comingSoonFeature}
+            </p>
+
+            {/* Description */}
+            <p className="text-gray-600 mb-6">
+              We're working hard to bring you this amazing feature. Stay tuned for updates!
+            </p>
+
+            {/* Decorative Elements */}
+            <div className="flex justify-center space-x-2 mb-6">
+              <div className="w-2 h-2 bg-yellow-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
+              <div className="w-2 h-2 bg-yellow-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
+              <div className="w-2 h-2 bg-yellow-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
+            </div>
+
+            {/* Close Button */}
+            <button
+              onClick={() => setShowComingSoonModal(false)}
+              className="w-full bg-gradient-to-r from-blue-500 to-blue-600 text-white py-3 px-6 rounded-lg hover:from-blue-600 hover:to-blue-700 transition-all duration-200 font-medium"
+            >
+              Got it!
+            </button>
+          </div>
+        </div>
+      )}
     </>
   )
 }
