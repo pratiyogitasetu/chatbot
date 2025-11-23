@@ -33,11 +33,40 @@ Transform your exam preparation with our cutting-edge **Retrieval-Augmented Gene
 
 ### 🛠️ Tech Stack
 
-| Frontend | Backend | AI/ML | Database | Cloud |
-|----------|---------|-------|----------|-------|
-| React 18 | Flask | Groq LLM | Pinecone Vector DB | Firebase |
-| Tailwind CSS | Python | Sentence Transformers | JSON Storage | Vercel Ready |
-| Vite | Semantic Search | RAG Architecture | Namespace Support | PWA Support |
+| Category | Technologies |
+|----------|-------------|
+| **Frontend** | React 18, Vite, Tailwind CSS, Lucide Icons |
+| **Backend** | Flask (Python 3.11+), Gunicorn |
+| **AI/ML** | Groq LLM (Llama 3.1), Sentence Transformers |
+| **Database** | Pinecone Vector DB, Firebase Firestore |
+| **Authentication** | Firebase Auth (Email, Google, GitHub) |
+| **Storage** | Firebase Storage, Pinecone Namespaces |
+| **Deployment** | Vercel (Frontend), Render/Railway (Backend) |
+| **PWA** | Service Workers, Offline Support |
+
+### 🌐 Architecture Overview
+
+**Frontend (React + Vite):**
+- Single Page Application (SPA) with React 18
+- Tailwind CSS for responsive styling
+- Context API for state management
+- Firebase SDK for authentication
+- Service Worker for offline support
+
+**Backend (Flask):**
+- RESTful API endpoints
+- RAG (Retrieval-Augmented Generation) implementation
+- Semantic search with Sentence Transformers
+- Pinecone vector database integration
+- Groq API for LLM responses
+
+**Data Flow:**
+1. User Query → Frontend
+2. API Request → Flask Backend
+3. Query Embedding → Sentence Transformers
+4. Vector Search → Pinecone
+5. Context + Query → Groq LLM
+6. Response → Frontend Display
 
 ---
 
@@ -76,23 +105,13 @@ Transform your exam preparation with our cutting-edge **Retrieval-Augmented Gene
 ![Wrong Answer](SCREENSHOTS/pyq%20wrong%20answer.png)
 **Learning from Mistakes** - Constructive feedback on incorrect answers with hints and detailed explanations to improve understanding.
 
-### 🎨 Customization & Features
-
-![Theme Customization](SCREENSHOTS/change%20theme%20color%20.png)
-**Theme Customization** - Personalize your study environment with multiple color themes and dark/light mode options.
-
-![Clock Feature](SCREENSHOTS/additional%20clock%20and%20date%20feature.png)
-**Study Timer** - Built-in clock and date display to help you track study sessions and maintain focus during preparation.
-
-![Subject Selection](SCREENSHOTS/in%20query%20can%20select%20which%20subject%20you%20want%20to%20study.png)
-**Subject-wise Learning** - Filter and focus on specific subjects for targeted preparation and better organization.
 
 ### 🔍 AI-Powered Search & Responses
 
 ![Answer Generation](SCREENSHOTS/answer%20generation%20chunks%20and%20sources.png)
 **Source-Cited Responses** - AI provides detailed answers with proper source citations and chunked information for better comprehension.
 
-![Ganga River Example](SCREENSHOTS/example%20view%20of%20ganga%20river.png)
+![Ganga River Example](SCREENSHOTS/chat%20view.png)
 **Rich Content Examples** - Comprehensive responses with detailed explanations, perfect for topics like geography, history, and current affairs.
 
 ### 📚 Content Management
@@ -105,8 +124,6 @@ Transform your exam preparation with our cutting-edge **Retrieval-Augmented Gene
 
 ### ℹ️ Information & Support
 
-![About Us](SCREENSHOTS/about%20us.png)
-**About Section** - Learn more about the platform, its mission, and the team behind this innovative study solution.
 
 ![Contact Us](SCREENSHOTS/contact%20us%20page.png)
 **Contact Support** - Easy-to-use contact form for user queries, feedback, and technical support.
@@ -125,61 +142,72 @@ Transform your exam preparation with our cutting-edge **Retrieval-Augmented Gene
 ### Prerequisites
 ```bash
 📋 System Requirements:
-• Python 3.8+ with pip
-• Node.js 16+ and npm
+• Python 3.11+ with pip
+• Node.js 18+ and npm
 • Git for version control
 • API keys for Groq and Pinecone
-• 4GB+ RAM recommended for ML models
+• Firebase project credentials
+• 4GB+ RAM recommended
 ```
 
 ### ⚡ Lightning Setup
 
-1. **Clone & Install**
+1. **Clone the Repository**
    ```bash
-   # Clone the repository
-   git clone https://github.com/manudev0004/chat.git
-   cd chat
+   git clone https://github.com/pratiyogitasetu/chatbot.git
+   cd chatbot
+   ```
 
-   # Install backend dependencies
+2. **Backend Setup**
+   ```bash
+   cd backend
+   
+   # Create virtual environment (recommended)
+   python -m venv venv
+   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   
+   # Install dependencies
    pip install -r requirements.txt
    
-   # Install frontend dependencies
-   cd FRONTEND
-   npm install
+   # Create .env file
+   cp .env.example .env
+   # Edit .env and add your API keys:
+   # GROQ_API_KEY=your_groq_api_key
+   # PINECONE_API_KEY=your_pinecone_api_key
    ```
 
-2. **Environment Setup**
+3. **Frontend Setup**
    ```bash
-   # Create .env file in root directory
-   GROQ_API_KEY=your_groq_api_key_here
-   PINECONE_API_KEY=your_pinecone_api_key_here
-   ```
-
-3. **Data Preparation & Training**
-   ```bash
-   # Run automated setup (includes training)
-   python setup.py
+   cd ../FRONTEND
    
-   # Or run training manually:
-   python DATA_TRAINING/train_text.py    # Train NCERT content
-   python DATA_TRAINING/train_pyq.py     # Train PYQ data
+   # Install dependencies
+   npm install
+   
+   # Create .env file
+   cp .env.example .env
+   # Edit .env and add your Firebase config:
+   # VITE_FIREBASE_API_KEY=your_firebase_key
+   # VITE_FIREBASE_AUTH_DOMAIN=your_auth_domain
+   # ... (see FRONTEND/.env.example for all variables)
    ```
 
 4. **Launch Application**
    ```bash
-   # Start backend server
-   python MAIN_SERVER/react_app.py
+   # Terminal 1: Start backend
+   cd backend
+   python app.py
+   # Backend will run on http://localhost:5000
    
-   # In another terminal, start frontend
+   # Terminal 2: Start frontend
    cd FRONTEND
    npm run dev
+   # Frontend will run on http://localhost:3002
    ```
 
 5. **Access Your App** 🎉
-   - 🌐 **Frontend**: http://localhost:5173
-   - ⚙️ **Backend API**: http://localhost:5000
-   - 💻 **CLI Tool**: `python cli/search_query.py`
-   - 🌐 **PYQ Interface**: http://localhost:5000 (when running pyq_server.py)
+   - 🌐 **Main App**: http://localhost:3002
+   - ⚙️ **API Docs**: http://localhost:5000/api/health
+   - 🔥 **Firebase Console**: https://console.firebase.google.com
 
 ---
 
@@ -190,325 +218,357 @@ Transform your exam preparation with our cutting-edge **Retrieval-Augmented Gene
 ├── 🎨 FRONTEND/                      # React + Vite Frontend Application
 │   ├── src/
 │   │   ├── components/               # Reusable UI components
-│   │   │   ├── ChatSection.jsx       # Main chat interface
-│   │   │   ├── AuthModal.jsx         # Authentication components
-│   │   │   ├── Dashboard.jsx         # User dashboard
-│   │   │   └── ...                   # More components
+│   │   │   ├── ChatSection.jsx       # Main chat interface with AI responses
+│   │   │   ├── AuthModal.jsx         # Firebase authentication modal
+│   │   │   ├── Dashboard.jsx         # User analytics dashboard
+│   │   │   ├── Sidebar.jsx           # Navigation sidebar with chat history
+│   │   │   ├── Navbar.jsx            # Top navigation bar
+│   │   │   ├── PYQSection.jsx        # Previous Year Questions interface
+│   │   │   ├── PYQPractice.jsx       # Interactive PYQ practice mode
+│   │   │   ├── QuizSection.jsx       # Quiz and assessment features
+│   │   │   ├── AttemptQuiz.jsx       # Quiz attempt interface
+│   │   │   ├── EligibilitySection.jsx # Exam eligibility checker (coming soon)
+│   │   │   ├── SyllabusSection.jsx   # Exam syllabus viewer (coming soon)
+│   │   │   ├── GDTopicsSection.jsx   # AI for GD topics (coming soon)
+│   │   │   ├── EditProfileModal.jsx  # User profile management
+│   │   │   ├── AboutUsModal.jsx      # About section modal
+│   │   │   ├── ContactModal.jsx      # Contact form modal
+│   │   │   ├── HelpSupportModal.jsx  # Help and support interface
+│   │   │   ├── WhatsNewModal.jsx     # Feature updates modal
+│   │   │   ├── InfoModals.jsx        # Information display modals
+│   │   │   ├── Clock.jsx             # Study timer component
+│   │   │   ├── FloatingSearchBar.jsx # Floating search interface
+│   │   │   ├── EmbeddedSearchBar.jsx # Embedded search component
+│   │   │   ├── SearchProgressIndicator.jsx # Search progress display
+│   │   │   ├── ErrorBoundary.jsx     # Error handling wrapper
+│   │   │   └── icons/                # Custom icon components
+│   │   │       ├── ChevronFirst.jsx  # Chevron icon
+│   │   │       ├── CircleHelp.jsx    # Help icon
+│   │   │       └── Network.jsx       # Network icon
 │   │   ├── contexts/                 # React context providers
-│   │   ├── config/                   # Firebase & app configuration
+│   │   │   ├── AuthContext.jsx       # Firebase authentication state
+│   │   │   ├── ThemeContext.jsx      # Theme management (dark/light mode)
+│   │   │   ├── LayoutContext.jsx     # Layout state management
+│   │   │   ├── DashboardContext.jsx  # Dashboard data management
+│   │   │   └── SearchHistoryContext.jsx # Search history tracking
+│   │   ├── config/
+│   │   │   └── firebase.js           # Firebase configuration
+│   │   ├── services/
+│   │   │   └── api.js                # Backend API service layer
 │   │   └── utils/                    # Helper functions
-│   └── public/                       # Static assets & PWA files
+│   │       ├── logger.js             # Logging utility
+│   │       ├── performance.js        # Performance monitoring
+│   │       ├── themeHelpers.js       # Theme utility functions
+│   │       └── validation.js         # Form validation helpers
+│   ├── public/                       # Static assets & PWA files
+│   │   ├── offline.html              # Offline fallback page
+│   │   ├── sw.js                     # Service worker for PWA
+│   │   └── *.svg                     # App icons and images
+│   ├── package.json                  # NPM dependencies
+│   ├── vite.config.js                # Vite build configuration
+│   ├── tailwind.config.js            # Tailwind CSS configuration
+│   ├── vercel.json                   # Vercel deployment config
+│   ├── .env                          # Environment variables (create this)
+│   ├── .env.example                  # Environment variables template
+│   └── README.md                     # Frontend documentation
 │
-├── 🔧 MAIN_SERVER/                   # Flask Backend API
-│   ├── react_app.py                 # Main API server
-│   └── mock_app.py                   # Development mock server
-│
-├── � CONTENT/                       # NCERT Educational Content
-│   ├── content_data/                 # Processed JSON files
-│   │   ├── economics.json            # Economics subject data
-│   │   ├── geography.json            # Geography subject data
-│   │   ├── history.json              # History subject data
-│   │   └── polity.json               # Polity subject data
-│   ├── content_data_insertion/       # Content processing tools
-│   │   └── doc_to_json.py            # DOCX to JSON converter
-│   └── content_raw_data/             # Source DOCX files
-│
-├── 📝 PYQ/                           # Previous Year Questions System
-│   ├── pyq_data/                     # Processed PYQ JSON files
-│   │   └── [ExamName].json           # Individual exam data
-│   ├── pyq_data_insertion/           # Web-based insertion system
-│   │   ├── pyq_insertion_ui.html     # Web interface for data entry
-│   │   ├── pyq_server.py             # Flask server for PYQ management
-│   │   ├── pyq_requirements.txt      # Python dependencies
-│   │   └── all_exam.json             # Exam configuration
-│   └── pyq_raw_data/                 # Source PYQ documents
-│
-├── 🤖 DATA_TRAINING/                 # AI Training Scripts
-│   ├── train_text.py                 # NCERT content indexing
-│   ├── train_pyq.py                  # PYQ database training
-│   ├── verify_json_training.py       # Data validation
-│   ├── text_train/trained/           # Trained text embeddings
-│   └── pyq_train/trained/            # Trained PYQ embeddings
-│
-├── 💻 cli/                           # Command Line Interface
-│   ├── search_query.py               # Interactive terminal search
-│   └── check_compatibility.py        # System compatibility checker
-│
-├── 📊 SCREENSHOTS/                   # Application screenshots
-│   ├── chat view.png                 # Main interface
-│   ├── pyq section.png               # PYQ features
-│   ├── dashboard analytics.png       # User analytics
-│   └── ...                          # More screenshots
-│
-├── 🔧 Configuration Files
+├── 🔧 backend/                       # Flask Backend API
+│   ├── app.py                        # Main Flask application
 │   ├── requirements.txt              # Python dependencies
-│   ├── setup.py                      # Automated setup script
-│   ├── config.py                     # Application configuration
-│   ├── firestore.indexes.json        # Firestore database indexes
-│   └── .env                          # Environment variables (create this)
+│   ├── Procfile                      # Deployment configuration (Railway/Render)
+│   ├── runtime.txt                   # Python version specification
+│   ├── railway.json                  # Railway deployment config
+│   ├── .env                          # Backend environment variables
+│   └── README.md                     # Backend documentation
 │
-└── 📝 Documentation
-    ├── README.md                     # This comprehensive guide
-    ├── Buildathon_Submission.doc     # Project submission document
-    └── PYQ/README.md                 # PYQ system documentation
+├── 🔧 Configuration Files (Root)
+│   ├── .env                          # Root environment variables
+│   ├── .gitignore                    # Git ignore rules
+│   └── README.md                     # This comprehensive guide
+│
+└── 📝 Documentation & Guides
+    ├── FRONTEND/
+    │   ├── DEPLOY.md                 # Frontend deployment guide
+    │   ├── VERCEL_ENV_SETUP.md       # Vercel environment setup
+    │   └── GITHUB_AUTH_SETUP.md      # GitHub authentication guide
+    └── backend/
+        ├── DEPLOYMENT_GUIDE.md       # Backend deployment options
+        ├── FIXES_SUMMARY.md          # Recent fixes and improvements
+        └── render.yaml               # Render deployment configuration
 ```
+
+### 📦 Key Files Explained
+
+**Frontend:**
+- `App.jsx` - Main React application component
+- `main.jsx` - Application entry point
+- `index.css` - Global styles
+- `vite.config.js` - Development server and build configuration
+- `vercel.json` - Production deployment settings
+
+**Backend:**
+- `app.py` - Flask server with RAG implementation
+- `requirements.txt` - Groq, Pinecone, Flask dependencies
+- `Procfile` - Web server startup command
+
+**Configuration:**
+- `.env` files contain API keys (Groq, Pinecone, Firebase)
+- `vercel.json` & `railway.json` for cloud deployment
+- `tailwind.config.js` for custom styling
 
 ---
 
 ## 🎯 Core Features Deep Dive
 
-### 🤖 AI-Powered Study Assistant
-- **RAG Architecture**: Combines retrieval and generation for accurate responses
-- **Context-Aware**: Understands your study context and provides relevant answers
-- **Source Citations**: Every answer includes proper source references
-- **Multi-Subject Support**: Economics, Geography, History, Polity, and Science
-- **Intelligent Chunking**: Smart content splitting for better context understanding
-- **Namespace Organization**: Separate vector spaces for different subjects
+### 🤖 AI-Powered Chat Assistant
+- **RAG Architecture**: Retrieval-Augmented Generation for accurate, context-aware responses
+- **Groq LLM Integration**: Powered by Llama 3.1 70B for intelligent answers
+- **Source Citations**: Every answer includes references to original content
+- **Context Memory**: Maintains conversation context for natural dialogue
+- **Real-time Responses**: Fast streaming responses for better UX
+- **Multi-turn Conversations**: Supports follow-up questions
 
-### 📚 Comprehensive Content Library
-- **NCERT Integration**: Complete textbook content from classes 6-12
-- **Smart Content Processing**: DOCX to JSON conversion with hierarchical structure
-- **Automated Indexing**: AI-powered content organization and embedding
-- **Rich Metadata**: Detailed source information and content hierarchy
-- **Chunked Processing**: Large content split intelligently for better retrieval
+### 📚 Study Features
+- **Interactive Chat**: Ask questions and get instant AI-powered answers
+- **PYQ Practice**: Practice with previous year questions from various exams
+- **Quiz Mode**: Test your knowledge with timed quizzes
+- **Dashboard Analytics**: Track your study progress and performance
+- **Subject Filtering**: Focus on specific subjects (Economics, Geography, History, Polity)
+- **Chat History**: Save and revisit previous study sessions (with authentication)
 
-### 📝 Advanced PYQ System
-- **Web-Based Interface**: Easy-to-use HTML interface for data insertion
-- **Smart Duplicate Detection**: Automatically prevents duplicate questions
-- **Namespace Management**: Organize questions by exam types
-- **JSON Structure Preservation**: Complete original data structure maintained
-- **Batch Processing**: Efficient handling of large question banks
-- **Real-time Validation**: Form and JSON validation during data entry
-- **RESTful API**: Programmatic access to PYQ data
+### 🎓 Exam Preparation Tools
+- **PYQ Database**: Comprehensive collection of previous year questions
+- **Subject-wise Organization**: Questions organized by topics and subjects
+- **Detailed Explanations**: Every question includes comprehensive explanations
+- **Important Markers**: AI-highlighted important questions
+- **Performance Tracking**: Monitor your progress across different subjects
+- **Weak Area Identification**: AI identifies topics needing more attention
 
-#### Supported Exam Types:
-- **UPSC**: Civil Services (Prelims & Mains)
-- **State PSCs**: UPPSC, MPPSC, BPSC, and more
-- **SSC**: CGL, CHSL, MTS, STENO
-- **Banking**: IBPS, SBI, RBI
-- **Railway**: RRB, Group D, NTPC
-- **Defense**: CDS, CAPF, NDA
-- **School Exams**: CBSE, State Boards
+### 🔐 User Management
+- **Firebase Authentication**: Secure email/password, Google, and GitHub sign-in
+- **User Profiles**: Personalized dashboards with study statistics
+- **Cloud Sync**: Access your data across devices
+- **Chat History**: Save and sync conversations (authenticated users)
+- **Guest Mode**: Try the app without signing up
+- **Profile Customization**: Edit profile details and preferences
 
-### 💻 Command Line Interface (CLI)
-- **Interactive Mode**: Real-time question-answer sessions
-- **Single Query Mode**: Quick one-time searches
-- **Multiple Search Types**:
-  - Combined RAG + MCQ search
-  - RAG-only search for detailed explanations
-  - MCQ-only search for practice questions
-  - Comprehensive search across all domains
-- **Advanced Filtering**: Subject-wise and exam-wise filtering
-- **Batch Operations**: Process multiple queries efficiently
+### 🎨 User Experience
+- **Modern UI**: Clean, intuitive interface with Tailwind CSS
+- **Responsive Design**: Perfect experience on desktop, tablet, and mobile
+- **Theme Support**: Customizable color themes for comfortable studying
+- **Dark/Light Mode**: Switch between themes based on preference
+- **PWA Support**: Install as a mobile/desktop app
+- **Offline Mode**: Basic functionality available offline
+- **Fast Performance**: Optimized with Vite for quick load times
 
-### 🎨 Modern User Experience
-- **Responsive Design**: Perfect on desktop, tablet, and mobile
-- **Dark/Light Themes**: Multiple color schemes for comfortable studying
-- **Progressive Web App**: Install on your device for offline access
-- **Real-time Search**: Instant results as you type
-- **Customizable Interface**: Personalize colors and layout preferences
-- **Accessibility Features**: Screen reader support and keyboard navigation
-
-### 🔐 Secure & Personal
-- **Firebase Authentication**: Industry-standard security
-- **Data Privacy**: Your study data remains private and secure
-- **Study Analytics**: Track progress without compromising privacy
-- **Cross-Device Sync**: Access your data from anywhere
-- **Secure API**: Protected endpoints with proper authentication
-
-### 📊 Analytics & Progress Tracking
-- **Study Metrics**: Track time spent on different subjects
-- **Performance Analytics**: Monitor your improvement over time
+### 📊 Analytics & Tracking
+- **Study Time Tracking**: Monitor time spent on different subjects
 - **Question History**: Review previously attempted questions
-- **Weak Area Identification**: AI identifies topics needing attention
-- **Study Streaks**: Maintain consistent study habits
-- **Progress Visualization**: Charts and graphs showing your growth
+- **Performance Metrics**: Detailed analysis of your preparation
+- **Progress Visualization**: Charts showing your improvement
+- **Subject-wise Stats**: Deep dive into specific areas
+- **Streak Tracking**: Maintain consistent study habits
 
 ---
 
 ## 🚀 Advanced Usage
 
-### 📖 Subject-Specific Queries
+### 📖 Using the Chat Interface
 ```
 💡 Example Queries:
 • "Explain the concept of GDP in Indian economy"
 • "What are the major rivers in India?"
-• "Previous year questions on fundamental rights"
-• "UPSC questions on Indian constitution"
-• "Banking exam questions on monetary policy"
+• "Tell me about the Indian Constitution"
+• "Explain photosynthesis process"
+• "What is the capital of India and its significance?"
 ```
 
-### 🎯 CLI Usage Examples
-```bash
-# Interactive mode
-python cli/search_query.py
+### 🎯 PYQ Practice Mode
+1. Navigate to **PYQ Practice** from sidebar
+2. Select exam type (UPSC, SSC, Banking, etc.)
+3. Choose subject and year
+4. Start practicing questions
+5. Get instant feedback and explanations
+6. Track your performance
 
-# Single query with combined search
-python cli/search_query.py "What is the capital of India?"
+### � Using the Dashboard
+- **View Statistics**: Total queries, study time, performance
+- **Analyze Progress**: Subject-wise performance charts
+- **Chat History**: Access previous conversations
+- **Profile Management**: Update your details and preferences
 
-# RAG-only search (detailed explanations)
-python cli/search_query.py "Explain photosynthesis" --rag
+### 🎨 Customizing Your Experience
+1. Click on **Settings** (top right)
+2. Choose your preferred theme
+3. Adjust notification preferences
+4. Customize sidebar visibility
+5. Set study goals and reminders
 
-# MCQ-only search (practice questions)
-python cli/search_query.py "Indian economy" --mcq
+### � Authentication Features
+- **Email/Password**: Traditional sign-up method
+- **Google Sign-In**: Quick authentication with Google account
+- **GitHub Sign-In**: Developer-friendly authentication
+- **Guest Mode**: Try features without account (limited functionality)
 
-# Comprehensive search (all domains)
-python cli/search_query.py "Indian constitution" --comprehensive
-
-# Get help
-python cli/search_query.py --help
-```
-
-### 📝 PYQ Data Management
-```bash
-# Navigate to PYQ insertion system
-cd PYQ/pyq_data_insertion
-
-# Install dependencies
-pip install -r pyq_requirements.txt
-
-# Start PYQ management server
-python pyq_server.py
-
-# Access web interface
-# Open http://localhost:5000 in browser
-```
-
-### 🔧 Data Training & Management
-```bash
-# Train all data automatically
-python setup.py
-
-# Train NCERT content only
-python DATA_TRAINING/train_text.py
-
-# Train PYQ data only
-python DATA_TRAINING/train_pyq.py
-
-# Check existing data in Pinecone
-python DATA_TRAINING/train_pyq.py --check
-
-# Validate JSON training data
-python DATA_TRAINING/verify_json_training.py
-```
-
-### 🎯 Exam-Specific Preparation
-```
-🔍 Filter by Exams:
-• UPSC CSE (Prelims & Mains)
-• State PSCs (UPPSC, MPPSC, BPSC)
-• SSC (CGL, CHSL, MTS)
-• Banking (IBPS, SBI)
-• Railway (RRB, Group D)
-• Defense (CDS, CAPF)
-• School Exams (CBSE, State Boards)
-```
-
-### 📊 Study Analytics Features
-- **Progress Tracking**: Monitor your learning journey across subjects
-- **Weak Areas**: AI identifies topics needing more attention
-- **Study Streaks**: Maintain consistent study habits
-- **Performance Metrics**: Detailed analysis of your preparation
-- **Time Management**: Track study session duration and frequency
-- **Subject-wise Analytics**: Deep dive into specific areas
-
-### 🌐 Web PYQ Interface Features
-- **Smart Form Validation**: Real-time validation during data entry
-- **Duplicate Prevention**: Automatic detection and prevention of duplicate questions
-- **Bulk Import**: Upload multiple questions efficiently
-- **Data Preview**: Review data before final submission
-- **Exam Organization**: Organize questions by exam type and year
-- **Export Options**: Download data in various formats
+### 📱 Progressive Web App (PWA)
+1. Visit the app in your browser
+2. Click the "Install" button (or browser menu)
+3. App will be installed on your device
+4. Access offline features and faster load times
 
 ---
 
 ## 🛠️ For Developers
 
-### 🔧 API Endpoints
+### 🔧 Backend API Endpoints
+
+#### Chat & Search
 ```javascript
 // Main chat endpoint
 POST /api/chat
 {
   "query": "Your study question",
-  "subject_filter": "geography" // optional
+  "conversation_history": [] // optional
 }
 
-// PYQ search endpoint  
-GET /api/pyq/search?query=rivers&exam=UPSC
-
-// User analytics
-GET /api/user/analytics
-
-// PYQ data insertion
-POST /api/pyq/insert
-{
-  "exam_name": "UPSC",
-  "questions": [...] // Array of question objects
-}
+// Response includes AI answer and sources
 ```
 
-### 🧪 Testing & Validation
-```bash
-# Run backend tests
-python -m pytest tests/
+#### PYQ Operations
+```javascript
+// Search PYQ questions
+POST /api/pyq/search
+{
+  "query": "Indian rivers",
+  "exam_name": "UPSC",      // optional
+  "year": "2023",           // optional
+  "subject": "Geography"    // optional
+}
 
-# Run frontend tests
+// Get random PYQ questions
+GET /api/pyq/random?count=10&exam=UPSC
+```
+
+#### System & Health
+```javascript
+// Health check
+GET /api/health
+// Returns: { status, initialized, components_loaded, timestamp }
+
+// Get available books
+GET /api/books
+// Returns list of indexed NCERT content
+
+// Get inserted PYQs info
+GET /api/pyqs
+// Returns list of available PYQ exams
+```
+
+### 🏗️ Frontend Architecture
+
+**Component Structure:**
+- `App.jsx` - Main app container
+- `ChatSection.jsx` - Chat interface logic
+- `PYQSection.jsx` - PYQ practice interface
+- `Dashboard.jsx` - User analytics
+- `Sidebar.jsx` - Navigation & chat history
+
+**State Management:**
+- `AuthContext` - User authentication state
+- `ThemeContext` - UI theme preferences
+- `LayoutContext` - Sidebar & layout state
+- `DashboardContext` - Dashboard data
+- `SearchHistoryContext` - Search & chat history
+
+**API Layer:**
+- `services/api.js` - Centralized API calls
+- Axios for HTTP requests
+- Error handling & retry logic
+
+### 🧪 Testing
+
+```bash
+# Backend testing
+cd backend
+python -m pytest tests/ -v
+
+# Frontend testing
 cd FRONTEND
 npm test
 
-# Integration tests
-python tests/integration_test.py
+# Run specific test file
+npm test ChatSection.test.jsx
 
-# Check system compatibility
-python cli/check_compatibility.py
-
-# Validate training data
-python DATA_TRAINING/verify_json_training.py
+# Coverage report
+npm test -- --coverage
 ```
 
 ### 📦 Building for Production
+
+**Frontend Build:**
 ```bash
-# Build frontend
 cd FRONTEND
 npm run build
+# Output in FRONTEND/dist/
 
-# Build backend distribution
-python setup.py build
-
-# Docker deployment (if using Docker)
-docker-compose up -d
-
-# Create production environment file
-cp .env.example .env.production
+# Preview production build
+npm run preview
 ```
 
-### 🔧 System Configuration
-```python
-# config.py - Main configuration
-GROQ_API_KEY = "your_groq_api_key"
-PINECONE_API_KEY = "your_pinecone_api_key"
-PINECONE_ENVIRONMENT = "us-east-1-aws"
+**Backend Deployment:**
+```bash
+cd backend
+# Using gunicorn
+gunicorn app:app --bind 0.0.0.0:$PORT
 
-# Index configurations
-RAG_INDEX_NAME = "ncert"
-MCQ_INDEX_NAME = "pyq-1"
-EMBEDDING_MODEL = "all-MiniLM-L6-v2"
+# Environment check
+python -c "import sys; print(sys.version)"
 ```
+
+### 🔧 Environment Variables
+
+**Backend (.env):**
+```bash
+GROQ_API_KEY=your_groq_api_key
+PINECONE_API_KEY=your_pinecone_api_key
+ALLOWED_ORIGINS=https://your-frontend-url.com
+PORT=5000
+```
+
+**Frontend (.env):**
+```bash
+VITE_API_BASE_URL=https://your-backend-url.com
+VITE_FIREBASE_API_KEY=your_firebase_api_key
+VITE_FIREBASE_AUTH_DOMAIN=your-app.firebaseapp.com
+VITE_FIREBASE_PROJECT_ID=your-project-id
+VITE_FIREBASE_STORAGE_BUCKET=your-app.appspot.com
+VITE_FIREBASE_MESSAGING_SENDER_ID=your-sender-id
+VITE_FIREBASE_APP_ID=your-app-id
+VITE_FIREBASE_MEASUREMENT_ID=your-measurement-id
+```
+
+### 🚀 Deployment
+
+**Vercel (Frontend):**
+1. Connect your GitHub repository
+2. Set environment variables in Vercel dashboard
+3. Deploy automatically on push
+
+**Render/Railway (Backend):**
+1. Connect GitHub repository
+2. Set environment variables
+3. Configure build & start commands
+4. Deploy
+
+See `FRONTEND/VERCEL_ENV_SETUP.md` and `backend/DEPLOYMENT_GUIDE.md` for detailed instructions.
 
 ### 🏗️ Architecture Details
 - **Frontend**: React 18 + Vite + Tailwind CSS
-- **Backend**: Flask + Python 3.8+
-- **AI/ML**: Groq LLM + Sentence Transformers
+- **Backend**: Flask + Gunicorn (Python 3.11+)
+- **AI/ML**: Groq API (Llama 3.1) + Sentence Transformers
 - **Vector DB**: Pinecone with namespace support
-- **Authentication**: Firebase Auth
-- **Storage**: JSON files + Pinecone vectors
-- **Deployment**: Vercel-ready with PWA support
-
-### 📊 Data Flow
-1. **Content Processing**: DOCX → JSON → Embeddings → Pinecone
-2. **Query Processing**: User Query → Embedding → Vector Search → LLM → Response
-3. **PYQ Management**: Web UI → Validation → JSON Storage → Training → Pinecone
-4. **User Interaction**: Frontend → API → Backend → AI Services → Response
+- **Authentication**: Firebase Auth (Email, Google, GitHub)
+- **Deployment**: Vercel (Frontend) + Render/Railway (Backend)
 
 ---
 
@@ -638,39 +698,23 @@ This project was inspired by the need for accessible, AI-powered education tools
 ## 📞 Support & Contact
 
 ### 🆘 Need Help?
-- 📧 **Email**: support@studyassistant.com
-- 💬 **Discord**: [Join our community](https://discord.gg/studyassistant)
-- 🐛 **Issues**: [GitHub Issues](https://github.com/manudev0004/chat/issues)
-- 📖 **Documentation**: [Full Docs](https://docs.studyassistant.com)
-- ❓ **FAQ**: [Frequently Asked Questions](https://github.com/manudev0004/chat/wiki/FAQ)
+-  **Issues**: [GitHub Issues](https://github.com/pratiyogitasetu/chatbot/issues)
+- � **Email**: support@pratiyogitasetu.com
+- 💬 **Community**: Join our discussion forums
 
-### 🌐 Stay Connected
-- 🐦 **Twitter**: [@StudyAssistantAI](https://twitter.com/studyassistant)
-- 📱 **LinkedIn**: [Study Assistant](https://linkedin.com/company/studyassistant)
-- 📺 **YouTube**: [Tutorial Channel](https://youtube.com/studyassistant)
-- 📰 **Blog**: [Latest Updates](https://blog.studyassistant.com)
-- 💬 **Telegram**: [Community Chat](https://t.me/studyassistant)
+### 🌐 Resources
+- � **Documentation**: See individual README files in FRONTEND/ and backend/
+- � **Deployment Guides**: 
+  - Frontend: `FRONTEND/VERCEL_ENV_SETUP.md`
+  - Backend: `backend/DEPLOYMENT_GUIDE.md`
+- � **Auth Setup**: `FRONTEND/GITHUB_AUTH_SETUP.md`
 
 ### 🔧 Technical Support
-- **System Requirements Issues**: Check our compatibility guide
+- **Installation Issues**: Check prerequisites and follow setup guide
 - **API Key Problems**: Verify your Groq and Pinecone credentials
-- **Installation Issues**: Follow our detailed setup instructions
-- **Performance Problems**: Optimize your system or contact support
-- **Data Training Issues**: Check our training troubleshooting guide
-
-### 📋 Feedback & Suggestions
-We love hearing from our users! Please share:
-- Feature requests and improvements
-- Bug reports with detailed steps to reproduce
-- Content suggestions and corrections
-- User experience feedback
-- Performance optimization ideas
-
-### 🚨 Urgent Issues
-For urgent technical issues or security concerns:
-- 🔴 **Critical Bugs**: Create a GitHub issue with "URGENT" label
-- 🔒 **Security Issues**: Email security@studyassistant.com
-- 💥 **System Down**: Check our status page or Discord
+- **Firebase Issues**: Ensure all Firebase config variables are set
+- **Performance Issues**: Check system requirements (4GB+ RAM)
+- **Deployment Issues**: Review deployment guides in respective folders
 
 ---
 
@@ -678,42 +722,36 @@ For urgent technical issues or security concerns:
 
 ### ⭐ Star this repo if it helps your preparation! ⭐
 
-![Visitor Badge](https://visitor-badge.laobi.icu/badge?page_id=manudev0004.chat)
-![GitHub last commit](https://img.shields.io/github/last-commit/manudev0004/chat)
-![GitHub repo size](https://img.shields.io/github/repo-size/manudev0004/chat)
-![GitHub stars](https://img.shields.io/github/stars/manudev0004/chat)
-![GitHub forks](https://img.shields.io/github/forks/manudev0004/chat)
-![GitHub issues](https://img.shields.io/github/issues/manudev0004/chat)
+![GitHub last commit](https://img.shields.io/github/last-commit/pratiyogitasetu/chatbot)
+![GitHub repo size](https://img.shields.io/github/repo-size/pratiyogitasetu/chatbot)
 
-### 📈 Project Stats
-- 🎯 **Active Users**: 1000+ students using daily
-- 📚 **Content**: 50,000+ NCERT pages indexed
-- 📝 **Questions**: 10,000+ PYQ questions available
-- 🔍 **Searches**: 100,000+ queries processed
-- ⚡ **Response Time**: <2 seconds average
-- 🎯 **Accuracy**: 95%+ user satisfaction
+### 📈 Project Features
+- 🎯 **AI-Powered Chat**: Intelligent study assistant
+- 📚 **NCERT Content**: Comprehensive textbook coverage
+- 📝 **PYQ Database**: Extensive previous year questions
+- 🔍 **Smart Search**: Fast semantic search
+- ⚡ **Quick Responses**: <2 seconds average
+- 🎯 **User Friendly**: 95%+ satisfaction
 
-### 🚀 Latest Updates (v2.0.0)
-- ✅ **New PYQ Web Interface** - Easy question insertion
-- ✅ **Advanced CLI Tool** - Multiple search modes
-- ✅ **Namespace Support** - Better data organization
-- ✅ **Smart Duplicate Detection** - Prevents data redundancy
-- ✅ **Enhanced Analytics** - Detailed progress tracking
-- ✅ **Improved Performance** - Faster search and responses
-- ✅ **Better Error Handling** - More robust system
-- ✅ **Updated Documentation** - Comprehensive guides
+### 🚀 Latest Version (v2.0.0)
+- ✅ **Enhanced UI/UX** - Modern, responsive design
+- ✅ **Firebase Authentication** - Email, Google, GitHub sign-in
+- ✅ **Dashboard Analytics** - Track study progress
+- ✅ **Chat History** - Save and sync conversations
+- ✅ **PWA Support** - Install as mobile/desktop app
+- ✅ **Improved Performance** - Faster responses
+- ✅ **Better Navigation** - Intuitive sidebar design
+- ✅ **Theme Customization** - Multiple color options
 
 ### 🔮 Coming Soon
-- 📱 Mobile App (React Native)
-- 🗣️ Voice Search Integration
-- 🌍 Multi-language Support
-- 🤝 Collaborative Study Features
-- 📊 Advanced Analytics Dashboard
-- 🎮 Gamification Elements
-- 🔌 Third-party Integrations
-- 📈 Performance Optimization
+- � **AI for GD Topics** - Group discussion preparation
+- � **Eligibility Checker** - Check exam eligibility
+- 📖 **Exam Syllabus** - Comprehensive syllabus viewer
+- 📱 **Mobile App** - Native mobile experience
+- �️ **Voice Search** - Voice-based queries
+- 🌍 **Multi-language** - Support for regional languages
 
-**Made with ❤️ for students by students**
+**Made with ❤️ for students**
 
 *Happy Learning! 🎓 Transform your exam preparation today!*
 
