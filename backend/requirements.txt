@@ -12,7 +12,7 @@ python-dotenv==1.0.0
 
 # AI & ML APIs
 groq==0.4.2
-pinecone-client>=5.0.0,<7.0.0
+pinecone>=5.0.0,<7.0.0
 
 # Embeddings (necessary for semantic search)
 sentence-transformers>=2.3.0,<3.0.0
