@@ -2,8 +2,12 @@
  * API Service for communicating with the Flask backend
  */
 
-// Use relative URL in development to leverage Vite proxy
-const API_BASE_URL = import.meta.env.DEV ? '/api' : 'http://localhost:5000/api';
+// Use environment variable or fallback to proxy in dev, or production URL
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL 
+  ? `${import.meta.env.VITE_API_BASE_URL}/api`
+  : import.meta.env.DEV 
+    ? '/api' 
+    : 'http://localhost:5000/api';
 
 class ApiService {
   constructor() {

@@ -4,14 +4,9 @@
   "devCommand": "npm run dev",
   "installCommand": "npm install",
   "framework": "vite",
-  "env": {
-    "VITE_API_BASE_URL": {
-      "type": "plain",
-      "value": "https://your-backend.railway.app"
-    }
-  },
   "build": {
     "env": {
+      "VITE_API_BASE_URL": "https://your-backend.railway.app",
       "NODE_ENV": "production"
     }
   },
